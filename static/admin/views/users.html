@@ -63,6 +63,7 @@
 						<th>{{ .L.Tc "users.userRole" 1 }}</th>
 						<th>{{ .L.Tc "users.listRole" 2 }}</th>
 						<th>{{ $d.Page.SortLink $base "created_at" (.L.T "globals.fields.createdAt") }}</th>
+						<th>{{ $d.Page.SortLink $base "updated_at" (.L.T "globals.fields.updatedAt") }}</th>
 						<th>{{ $d.Page.SortLink $base "loggedin_at" (.L.T "globals.fields.lastLogin") }}</th>
 						<th class="actions align-right"></th>
 					</tr>
@@ -106,6 +107,7 @@
 								{{- end }}
 							</td>
 							<td class="date-stack" data-label="{{ $.L.T "globals.fields.createdAt" }}">{{ NiceDate .CreatedAt }}</td>
+							<td class="date-stack" data-label="{{ $.L.T "globals.fields.updatedAt" }}">{{ NiceDate .UpdatedAt }}</td>
 							<td class="date-stack" data-label="{{ $.L.T "globals.fields.lastLogin" }}">{{ if .LoggedInAt.Valid }}{{ NiceDate .LoggedInAt }}{{ else }}<span class="text-light">&mdash;</span>{{ end }}</td>
 							<td class="actions align-right">
 								{{- if $d.Can "users:manage" }}
@@ -122,7 +124,7 @@
 							</td>
 						</tr>
 					{{- else }}
-						{{ if $d.Can "users:manage" }}{{ template "empty-state" 8 }}{{ else }}{{ template "empty-state" 7 }}{{ end }}
+						{{ if $d.Can "users:manage" }}{{ template "empty-state" 9 }}{{ else }}{{ template "empty-state" 8 }}{{ end }}
 					{{- end }}
 				</tbody>
 			</table>

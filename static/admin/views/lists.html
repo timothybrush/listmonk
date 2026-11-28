@@ -69,10 +69,11 @@
 				<thead>
 					<tr>
 						<th width="5%"><input type="checkbox" aria-label="{{ .L.T "globals.buttons.toggleSelect" }}"></th>
-						<th width="27%">{{ $d.Page.SortLink (URI "/admin/lists") "name" (.L.T "globals.fields.name") }}</th>
+						<th width="24%">{{ $d.Page.SortLink (URI "/admin/lists") "name" (.L.T "globals.fields.name") }}</th>
 						<th width="22%">{{ $d.Page.SortLink (URI "/admin/lists") "type" (.L.T "globals.fields.type") }}</th>
 						<th width="20%" class="subscribers">{{ $d.Page.SortLink (URI "/admin/lists") "subscriber_count" (.L.T "globals.terms.subscribers") }}</th>
 						<th width="12%">{{ $d.Page.SortLink (URI "/admin/lists") "created_at" (.L.T "globals.fields.createdAt") }}</th>
+						<th width="12%">{{ $d.Page.SortLink (URI "/admin/lists") "updated_at" (.L.T "globals.fields.updatedAt") }}</th>
 						<th width="5%" class="align-right"></th>
 					</tr>
 				</thead>
@@ -136,8 +137,8 @@
 							</td>
 							<td class="date-stack" data-label="{{ $.L.T "globals.fields.createdAt" }}">
 								{{ NiceDate .CreatedAt }}
-								<!-- <p class="text-lighter text-8">{{ NiceDate .UpdatedAt }}</p> -->
 							</td>
+							<td class="date-stack" data-label="{{ $.L.T "globals.fields.updatedAt" }}">{{ NiceDate .UpdatedAt }}</td>
 							<td class="actions align-right">
 									<ot-dropdown>
 										<button popovertarget="list-actions-{{ .ID }}" type="button" class="ghost more icon" aria-label="{{ $.L.T "globals.buttons.more" }}">
@@ -172,7 +173,7 @@
 							</td>
 						</tr>
 					{{- else }}
-						{{ template "empty-state" 6 }}
+						{{ template "empty-state" 7 }}
 					{{- end }}
 				</tbody>
 			</table>
