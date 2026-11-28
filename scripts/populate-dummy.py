@@ -217,10 +217,11 @@ def main():
         camps.append((str(uuid.uuid4()), name, name, "noreply@example.com",
                       f"<p>{sentence_name(6)}</p>", "richtext", status,
                       now + timedelta(days=3650) if status == "scheduled" else None,
+                      rand_time(now) if status in ("finished", "cancelled") else None,
                       "email", template_id, rand_tags(), sent, to_send))
     camp_ids = [r[0] for r in insert(cur, """
         INSERT INTO campaigns (uuid, name, subject, from_email, body, content_type, status,
-            send_at, messenger, template_id, tags, sent, to_send) VALUES {} RETURNING id
+            send_at, started_at, messenger, template_id, tags, sent, to_send) VALUES {} RETURNING id
     """, camps, fetch=True)]
     print(f"{len(camp_ids)} campaigns")
 
@@ -270,9 +271,10 @@ def main():
         count = max(click_counts[cid], view_counts[cid], bounce_counts[cid], 1)
         sent = random.randint(count * 2, count * 5)
         cur.execute("""
-            UPDATE campaigns SET sent=%s, to_send=%s, status='finished', send_at=NULL
+            UPDATE campaigns SET sent=%s, to_send=%s, status='finished', send_at=NULL,
+                started_at=COALESCE(started_at, %s)
             WHERE id=%s
-        """, [sent, sent, cid])
+        """, [sent, sent, rand_time(now), cid])
     print(f"{len(click_camps)} finished campaigns with sent totals")
 
     db.commit()

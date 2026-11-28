@@ -8,7 +8,15 @@
 			<div class="col-4">
 				<div>{{ $c.Subject }}</div>
 				<div class="text-small text-light">{{ $c.FromEmail }}</div>
-				<div class="text-small text-light mt-2" title="{{ .L.T "globals.fields.createdAt" }}">{{ NiceDate $c.CreatedAt }}</div>
+				<div class="text-small text-light mt-2">
+					{{ if eq $c.Status "scheduled" }}
+						{{ .L.T "globals.terms.scheduled" }} {{ NiceDate $c.SendAt }}
+					{{ else if eq $c.Status "finished" }}
+						{{ .L.T "globals.terms.sent" }} {{ NiceDate $c.StartedAt }}
+					{{ else }}
+						{{ .L.T "globals.fields.createdAt" }} {{ NiceDate $c.CreatedAt }}
+					{{ end }}
+				</div>
 			</div>
 			<div class="col-4">
 				<div class="hstack gap-2 mb-2">

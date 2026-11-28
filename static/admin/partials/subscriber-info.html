@@ -6,7 +6,7 @@
 		<div class="row">
 			<div class="col-4">
 				<strong>{{ $d.Subscriber.Name }}</strong>
-				<div class="text-small text-light">{{ NiceDate $d.Subscriber.CreatedAt }}</div>
+				<div class="text-small text-light">{{ .L.T "globals.fields.createdAt" }} {{ NiceDate $d.Subscriber.CreatedAt }}</div>
 			</div>
 			<div class="col-4">
 				<div class="hstack gap-2">
