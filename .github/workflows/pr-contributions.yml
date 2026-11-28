@@ -11,7 +11,7 @@ jobs:
   check-paths:
     runs-on: ubuntu-latest
     steps:
-      - uses: knadh/approve-pr-from-issue@v1.1.1
+      - uses: knadh/approve-pr-creation-from-issue@v1.1.1
         with:
           allowed_paths: |
             i18n/**
