@@ -6,6 +6,7 @@ import json
 import os
 import random
 import uuid
+from collections import Counter
 from datetime import datetime, timedelta, timezone
 from urllib.parse import urlparse
 
@@ -206,14 +207,20 @@ def main():
     camps = []
     for _ in range(NUM_CAMPAIGNS):
         status = random.choice(CAMPAIGN_STATUSES)
+        to_send = random.randint(max(1, NUM_SUBSCRIBERS // 4), NUM_SUBSCRIBERS)
+        sent = 0
+        if status == "finished":
+            sent = to_send
+        elif status == "cancelled":
+            sent = random.randint(max(1, to_send // 10), max(1, to_send * 9 // 10))
         name = sentence_name(4)
         camps.append((str(uuid.uuid4()), name, name, "noreply@example.com",
                       f"<p>{sentence_name(6)}</p>", "richtext", status,
                       now + timedelta(days=3650) if status == "scheduled" else None,
-                      "email", template_id, rand_tags()))
+                      "email", template_id, rand_tags(), sent, to_send))
     camp_ids = [r[0] for r in insert(cur, """
         INSERT INTO campaigns (uuid, name, subject, from_email, body, content_type, status,
-            send_at, messenger, template_id, tags) VALUES {} RETURNING id
+            send_at, messenger, template_id, tags, sent, to_send) VALUES {} RETURNING id
     """, camps, fetch=True)]
     print(f"{len(camp_ids)} campaigns")
 
@@ -255,6 +262,18 @@ def main():
         INSERT INTO bounces (campaign_id, subscriber_id, type, source, created_at) VALUES {}
     """, bounces)
     print(f"{len(bounces)} bounces")
+
+    click_counts = Counter(r[0] for r in clicks)
+    view_counts = Counter(r[0] for r in views)
+    bounce_counts = Counter(r[0] for r in bounces)
+    for cid in click_camps:
+        count = max(click_counts[cid], view_counts[cid], bounce_counts[cid], 1)
+        sent = random.randint(count * 2, count * 5)
+        cur.execute("""
+            UPDATE campaigns SET sent=%s, to_send=%s, status='finished', send_at=NULL
+            WHERE id=%s
+        """, [sent, sent, cid])
+    print(f"{len(click_camps)} finished campaigns with sent totals")
 
     db.commit()
     cur.close()
