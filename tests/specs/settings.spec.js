@@ -34,6 +34,30 @@ test.describe('Settings', () => {
   test.beforeEach(async ({ browser }) => { await resetDB(browser); });
   test.beforeEach(async ({ page }) => { await page.goto(SETTINGS); });
 
+  test('reveals invalid settings in another tab before saving', async ({ page }) => {
+    await tab(page, 'Media uploads').click();
+    await page.locator('#upload-provider').selectOption('filesystem');
+    const path = page.getByPlaceholder('/home/listmonk/uploads');
+    const uri = page.getByPlaceholder('/uploads', { exact: true });
+    await path.fill('');
+    await uri.fill('');
+    await tab(page, 'SMTP').click();
+
+    const saves = [];
+    page.on('request', (r) => {
+      if (new URL(r.url()).pathname === '/api/settings' && r.method() === 'PUT') saves.push(r);
+    });
+    await page.getByRole('button', { name: 'Save', exact: true }).click();
+    await expect(path).toBeVisible();
+    await expect(path).toBeFocused();
+    await path.fill('uploads');
+    await tab(page, 'SMTP').click();
+    await page.getByRole('button', { name: 'Save', exact: true }).click();
+    await expect(uri).toBeVisible();
+    await expect(uri).toBeFocused();
+    expect(saves).toHaveLength(0);
+  });
+
   test('validates sender defaults and preserves configured and custom campaign senders', async ({ page }) => {
     const first = 'Default <default@example.com>';
     const second = 'News <news@example.com>';

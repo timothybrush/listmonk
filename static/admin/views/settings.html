@@ -8,7 +8,7 @@
 	const _listRoles = {{ ToJSON $d.ListRoles }};
 </script>
 
-<form class="settings" @submit.prevent="onSubmit" x-data="settingsView(_settings, _userRoles, _listRoles)">
+<form class="settings" novalidate @submit.prevent="onSubmit" x-data="settingsView(_settings, _userRoles, _listRoles)">
 		<header class="row page-header">
 			<div class="col-4">
 				<h1 class="page-title">

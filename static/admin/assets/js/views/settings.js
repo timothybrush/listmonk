@@ -355,6 +355,27 @@ function component(settings, userRoles, listRoles) {
     // ===============
     // Submit.
     async onSubmit() {
+      // Jump to the first invalid control if there's one.
+      const invalid = Array.from(this.$root.elements).find((el) => el.willValidate && !el.validity.valid);
+      if (invalid) {
+        this.clearSearch();
+        const panel = invalid.closest('[role="tabpanel"]');
+        const index = tabPanels.indexOf(panel);
+        if (index !== -1) {
+          this.$refs.tabs.activeIndex = index;
+        }
+
+        for (let el = invalid.parentElement; el && el !== this.$root; el = el.parentElement) {
+          if (el.tagName === 'DETAILS') {
+            el.open = true;
+          }
+        }
+
+        await this.$nextTick();
+        invalid.reportValidity();
+        return;
+      }
+
       const form = JSON.parse(JSON.stringify(this.form));
       let dummy = '';
 
