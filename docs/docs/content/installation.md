@@ -116,37 +116,39 @@ $ helm upgrade \
 
 ## 3rd party hosting
 
-<a href="https://dash.elest.io/deploy?soft=Listmonk&id=237"><img src="https://raw.githubusercontent.com/elestio-examples/reactjs/refs/heads/master/src/deploy-on-elestio.png" alt="Deploy to Elestio" height="35" style="max-width: 150px;" /></a>
+<a href="https://www.nodion.com/en/deploy/listmonk/"><img loading="lazy" src="https://listmonk.app/static/images/host-nodion.svg" alt="Deploy to Nodion" style="max-width: 150px;" /></a>
 <br />
-<a href="https://www.pikapods.com/pods?run=listmonk"><img src="https://www.pikapods.com/static/run-button.svg" alt="Deploy on PikaPod" style="max-width: 150px;" /></a>
+<a href="https://www.kloudbean.com/listmonk-self-hosted"><img loading="lazy" src="https://listmonk.app/static/images/host-kloudbean.svg" alt="One-click deploy on Kloudbean" style="max-width: 150px;" /></a>
 <br />
-<a href="https://northflank.com/stacks/deploy-listmonk"><img src="https://assets.northflank.com/deploy_to_northflank_smm_36700fb050.svg" alt="One-click deploy on Northflank" height="35" style="max-width: 150px; border-radius: 6px; object-fit: contain;" /></a>
+<a href="https://northflank.com/stacks/deploy-listmonk"><img loading="lazy" src="https://listmonk.app/static/images/host-northflank.webp" alt="One-click deploy on Northflank" style="max-width: 150px;" /></a>
 <br />
-<a href="https://railway.app/new/template/listmonk"><img src="https://railway.app/button.svg" alt="One-click deploy on Railway" style="max-width: 150px;" /></a>
+<a href="https://railway.app/new/template/listmonk"><img loading="lazy" src="https://listmonk.app/static/images/host-railway.svg" alt="One-click deploy on Railway" style="max-width: 150px;" /></a>
 <br />
-<a href="https://repocloud.io/details/?app_id=217"><img src="https://d16t0pc4846x52.cloudfront.net/deploy.png" alt="Deploy at RepoCloud" style="max-width: 150px;"/></a>
+<a href="https://zenith.hosting/host/listmonk"><img loading="lazy" src="https://listmonk.app/static/images/host-zenith.svg" alt="Deploy with Zenith" style="max-width: 150px;" /></a>
 <br />
-<a href="https://sealos.io/products/app-store/listmonk"><img src="https://sealos.io/Deploy-on-Sealos.svg" alt="Deploy on Sealos" style="max-width: 150px;"/></a>
+<a href="https://www.pikapods.com/pods?run=listmonk"><img loading="lazy" src="https://listmonk.app/static/images/host-pikapods.svg" alt="Deploy on PikaPod" style="max-width: 150px;" /></a>
 <br />
-<a href="https://zeabur.com/templates/5EDMN6"><img src="https://zeabur.com/button.svg" alt="Deploy on Zeabur" style="max-width: 150px;"/></a>
+<a href="https://elest.io/open-source/listmonk"><img loading="lazy" src="https://listmonk.app/static/images/host-elestio.webp" alt="Deploy on Elestio" style="max-width: 150px;" /></a>
 <br />
-<a href="https://www.cloudron.io/store/app.listmonk.cloudronapp.html"><img src="https://cloudron.io/img/button.svg" alt="Install on Cloudron" style="max-width: 150px;"/></a>
+<a href="https://zeabur.com/templates/5EDMN6"><img loading="lazy" src="https://listmonk.app/static/images/host-zeabur.svg" alt="Deploy on Zeabur" style="max-width: 150px;" /></a>
 <br />
-<a href="https://console.hostim.dev/dashboard?preview=1&modal=1&template=listmonk"><img src="https://hostim.dev/img/deploy-button.svg" alt="Deploy on Hostim" style="max-width: 150px;"/></a>
+<a href="https://cloudzy.com/marketplace/listmonk/"><img loading="lazy" src="https://listmonk.app/static/images/host-cloudzy.svg" alt="Deploy to Cloudzy" style="max-width: 150px;" /></a>
 <br />
-<a href="https://pethost.dev/templates/listmonk/"><img src="https://pethost.dev/button.svg" alt="Deploy on Pethost" style="max-width: 150px;"/></a>
+<a href="https://lumadock.com/vps-hosting/listmonk"><img loading="lazy" src="https://listmonk.app/static/images/host-lumadock.svg" alt="Runs faster on LumaDock" style="max-width: 150px;" /></a>
 <br />
-<a href="https://podway.io/start?app=listmonk&ref=docs-listmonk"><img src="https://podway.io/img/deploy-on-podway.svg" alt="Deploy on podway" style="max-width: 150px;"/></a>
+<a href="https://pethost.dev/templates/listmonk/"><img loading="lazy" src="https://listmonk.app/static/images/host-pethost.svg" alt="Deploy on Pethost" style="max-width: 150px;" /></a>
 <br />
-<a href="https://www.simafri.com/en/guides/self-host-listmonk/"><img src="https://listmonk.app/static/images/host-simafri.svg" alt="Self-host on Simafri" style="max-width: 150px;"/></a>
+<a href="https://podway.io/start?app=listmonk&ref=docs-listmonk"><img loading="lazy" src="https://listmonk.app/static/images/host-podway.svg" alt="Deploy on podway" style="max-width: 150px;" /></a>
 <br />
-<a href="https://zop.dev/zopday/app/deploy?image=listmonk%2Flistmonk%3Av6.2.0&port=9000&db=postgres&env=LISTMONK_db__host%3D%7Bpostgres.host%7D&env=LISTMONK_db__port%3D%7Bpostgres.port%7D&env=LISTMONK_db__user%3D%7Bpostgres.user%7D&env=LISTMONK_db__password%3D%7Bpostgres.password%7D&env=LISTMONK_db__database%3D%7Bpostgres.name%7D&env=LISTMONK_db__ssl_mode%3Ddisable&env=LISTMONK_app__address%3D0.0.0.0%3A9000&cmd=.%2Flistmonk+--install+--idempotent+--yes+--config+%27%27+%26%26+.%2Flistmonk+--config+%27%27&utm_source=github&utm_medium=one_click&utm_content=listmonk"><img src="https://zop.dev/deploytozopday-inkhard.svg" alt="Deploy to ZopDay" style="max-width: 150px;"/></a>
+<a href="https://www.simafri.com/en/guides/self-host-listmonk/"><img loading="lazy" src="https://listmonk.app/static/images/host-simafri.svg" alt="Self-host on Simafri" style="max-width: 150px;" /></a>
 <br />
-<a href="https://docs.controlplane.com/template-catalog/templates/listmonk?utm_source=github&utm_medium=readme&utm_campaign=upstream-listmonk"><img src="https://docs.controlplane.com/images/deploy-on-controlplane.svg" alt="Deploy on Control Plane" style="max-width: 150px;"/></a>
+<a href="https://www.hostg.xyz/aff_c?offer_id=815&aff_id=249561&url_id=7169" title="One-click deployment on Hostinger. Sets up a listmonk instance with Docker in a few minutes, with full root access."><img loading="lazy" src="https://listmonk.app/static/images/host-hostinger.svg" alt="Deploy on Hostinger" style="max-width: 150px;" /></a>
 <br />
-<a href="https://www.hostg.xyz/aff_c?offer_id=815&aff_id=249561&url_id=7169"><img src="https://listmonk.app/static/images/host-hostinger.svg" alt="Deploy on Hostinger" style="max-width: 150px;"/></a>
+<a href="https://zop.dev/zopday/app/deploy?image=listmonk%2Flistmonk%3Av6.2.0&port=9000&db=postgres&env=LISTMONK_db__host%3D%7Bpostgres.host%7D&env=LISTMONK_db__port%3D%7Bpostgres.port%7D&env=LISTMONK_db__user%3D%7Bpostgres.user%7D&env=LISTMONK_db__password%3D%7Bpostgres.password%7D&env=LISTMONK_db__database%3D%7Bpostgres.name%7D&env=LISTMONK_db__ssl_mode%3Ddisable&env=LISTMONK_app__address%3D0.0.0.0%3A9000&cmd=.%2Flistmonk+--install+--idempotent+--yes+--config+%27%27+%26%26+.%2Flistmonk+--config+%27%27&utm_source=github&utm_medium=one_click&utm_content=listmonk"><img loading="lazy" src="https://listmonk.app/static/images/host-zopday.svg" alt="Deploy to ZopDay" style="max-width: 150px;" /></a>
 <br />
-**Self-host on Hostinger**: listmonk is available as a one-click deployment on Hostinger. It sets up a listmonk instance with Docker in a few minutes, with full root access.
+<a href="https://docs.controlplane.com/template-catalog/templates/listmonk?utm_source=listmonk&utm_medium=homepage&utm_campaign=upstream-listmonk"><img loading="lazy" src="https://listmonk.app/static/images/host-controlplane.svg" alt="Deploy on Control Plane" style="max-width: 150px;" /></a>
+<br />
+<a href="https://selfhost.dev/deploy/listmonk/?utm_source=listmonk&utm_medium=site&utm_campaign=oss_partnerships"><img loading="lazy" src="https://listmonk.app/static/images/host-selfhost.svg" alt="Deploy on Selfhost.dev" style="max-width: 150px;" /></a>
 
 ## Tutorials
 * [Listmonk with Forward Email for Secure Newsletter Delivery](https://forwardemail.net/en/guides/newsletter-with-listmonk)
