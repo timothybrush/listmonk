@@ -866,8 +866,8 @@ func drawTransparentImage(h, w int) []byte {
 }
 
 // processSubForm processes an incoming form/public API subscription request.
-// The bool indicates whether there was subscription to an optin list so that
-// an appropriate message can be shown.
+// The bool indicates whether the requested lists include a double opt-in list,
+// independent of the subscriber's current membership or confirmation status.
 func (a *App) processSubForm(c *echo.Context) (bool, error) {
 	// Get and validate fields.
 	var req struct {
@@ -905,19 +905,24 @@ func (a *App) processSubForm(c *echo.Context) (bool, error) {
 	listUUIDs := pq.StringArray(req.FormListUUIDs)
 
 	// Fetch the list types and ensure that they are not private.
-	listTypes, err := a.core.GetListTypes(nil, req.FormListUUIDs)
+	lists, err := a.core.GetListsByOptin(nil, req.FormListUUIDs, "")
 	if err != nil {
 		return false, echo.NewHTTPError(http.StatusInternalServerError, fmt.Sprintf("%s", err.(*echo.HTTPError).Message))
 	}
 
-	for _, t := range listTypes {
-		if t == models.ListTypePrivate {
+	hasOptin := false
+	for _, l := range lists {
+		if l.Type == models.ListTypePrivate {
 			return false, echo.NewHTTPError(http.StatusBadRequest, a.i18n.T("globals.messages.invalidUUID"))
+		}
+
+		if l.Optin == models.ListOptinDouble {
+			hasOptin = true
 		}
 	}
 
 	// Insert the subscriber into the DB.
-	_, hasOptin, err := a.core.InsertSubscriber(models.Subscriber{
+	_, _, err = a.core.InsertSubscriber(models.Subscriber{
 		Name:   req.Name,
 		Email:  req.Email,
 		Status: models.SubscriberStatusEnabled,
@@ -938,7 +943,7 @@ func (a *App) processSubForm(c *echo.Context) (bool, error) {
 		}
 
 		// Update the subscriber's subscriptions in the DB.
-		_, hasOptin, err := a.core.UpdateSubscriberWithLists(sub.ID, sub, nil, listUUIDs, false, false, true, nil, true)
+		_, _, err = a.core.UpdateSubscriberWithLists(sub.ID, sub, nil, listUUIDs, false, false, true, nil, true)
 		if err == nil {
 			return hasOptin, nil
 		}

@@ -972,7 +972,7 @@ func (a *App) makeOptinCampaignMessage(o campReq) (campReq, error) {
 	}
 
 	// Fetch double opt-in lists from the given list IDs from the DB.
-	lists, err := a.core.GetListsByOptin(o.ListIDs, models.ListOptinDouble)
+	lists, err := a.core.GetListsByOptin(o.ListIDs, nil, models.ListOptinDouble)
 	if err != nil {
 		return o, err
 	}

@@ -112,9 +112,9 @@ func (c *Core) GetList(id int, uuid string) (models.List, error) {
 }
 
 // GetListsByOptin returns lists by optin type.
-func (c *Core) GetListsByOptin(ids []int, optinType string) ([]models.List, error) {
+func (c *Core) GetListsByOptin(ids []int, uuids []string, optinType string) ([]models.List, error) {
 	out := []models.List{}
-	if err := c.q.GetListsByOptin.Select(&out, optinType, pq.Array(ids), nil); err != nil {
+	if err := c.q.GetListsByOptin.Select(&out, optinType, pq.Array(ids), pq.StringArray(uuids)); err != nil {
 		c.log.Printf("error fetching lists for opt-in: %s", pqErrMsg(err))
 		return nil, echo.NewHTTPError(http.StatusInternalServerError,
 			c.i18n.Ts("globals.messages.errorFetching", "name", "{globals.terms.list}", "error", pqErrMsg(err)))
