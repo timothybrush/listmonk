@@ -8,10 +8,11 @@
 
 {{- $dateFields := list (dict "Field" "created_at" "Label" "globals.fields.createdAt")
 						(dict "Field" "started_at" "Label" "globals.fields.startedAt")
-						(dict "Field" "updated_at" "Label" "globals.fields.endedAt")
+						(dict "Field" "updated_at" "Label" "globals.fields.updatedAt")
+						(dict "Field" "ended_at" "Label" "globals.fields.endedAt")
 						(dict "Field" "send_at" "Label" "globals.terms.scheduled") -}}
-{{- $dateField := "" -}}
-{{- $dateLabel := $root.L.T "globals.terms.timestamps" -}}
+{{- $dateField := "created_at" -}}
+{{- $dateLabel := $root.L.T "globals.fields.createdAt" -}}
 {{- range $dateFields -}}
 	{{- if eq ($d.Page.Param "order_by") .Field -}}
 		{{- $dateField = .Field -}}
@@ -55,13 +56,12 @@
 				<th width="10%">{{ $root.L.T "globals.terms.analytics" }}</th>
 				<th width="18%" class="cy-timestamp">
 					<div class="timestamp-sort">
-						{{ $d.Page.SortLink $tableBase (default "created_at" $dateField) $dateLabel }}
+						{{ $d.Page.SortLink $tableBase $dateField $dateLabel }}
 						<ot-dropdown>
-							<button type="button" class="ghost small icon" popovertarget="camp-timestamp-sort" aria-label="{{ $root.L.T "globals.terms.timestamps" }}" aria-haspopup="menu">
+							<button type="button" class="ghost small icon" popovertarget="camp-timestamp-sort" aria-label="{{ $dateLabel }}" aria-haspopup="menu">
 								{{ Icon "chevron-down" }}
 							</button>
 							<menu popover id="camp-timestamp-sort">
-								<a role="menuitem" class="button ghost" href="{{ $d.Page.FilterURL $tableBase "order_by" "order" }}">{{ $root.L.T "globals.terms.all" }}</a>
 								{{- range $dateFields }}
 									{{- $order := "asc" -}}
 									{{- if and (eq ($d.Page.Param "order_by") .Field) (eq ($d.Page.Param "order") "asc") }}{{ $order = "desc" }}{{ end -}}
@@ -168,33 +168,14 @@
 						</div>
 					</td>
 					<td class="timestamp" data-label="{{ $dateLabel }}">
-						{{- if $dateField }}
-							{{- $date := .CreatedAt -}}
-							{{- if eq $dateField "started_at" }}{{ $date = .StartedAt }}{{ end -}}
-							{{- if eq $dateField "updated_at" }}{{ $date = .UpdatedAt }}{{ end -}}
-							{{- if eq $dateField "send_at" }}{{ $date = .SendAt }}{{ end -}}
-							{{- if and $date.Valid (or (ne $dateField "updated_at") $hasEnded) }}
-								<span tabindex="0" title="{{ ExactDate $date }}" @click="$el.focus()" data-tooltip-placement="bottom">{{ NiceDate $date true }}</span>
-							{{- else }}
-								—
-							{{- end }}
+						{{- $date := .CreatedAt -}}
+						{{- if eq $dateField "started_at" }}{{ $date = .StartedAt }}{{ end -}}
+						{{- if or (eq $dateField "updated_at") (eq $dateField "ended_at") }}{{ $date = .UpdatedAt }}{{ end -}}
+						{{- if eq $dateField "send_at" }}{{ $date = .SendAt }}{{ end -}}
+						{{- if and $date.Valid (or (ne $dateField "ended_at") $hasEnded) }}
+							<span tabindex="0" title="{{ ExactDate $date }}" @click="$el.focus()" data-tooltip-placement="bottom">{{ NiceDate $date true }}</span>
 						{{- else }}
-							{{- $timeline := printf "%s: %s" ($root.L.T "globals.fields.createdAt") (ExactDate .CreatedAt) }}
-							{{- if .SendAt.Valid }}{{ $timeline = printf "%s\n%s: %s" $timeline ($root.L.T "globals.terms.scheduled") (ExactDate .SendAt) }}{{ end }}
-							{{- if .StartedAt.Valid }}{{ $timeline = printf "%s\n%s: %s" $timeline ($root.L.T "globals.fields.startedAt") (ExactDate .StartedAt) }}{{ end }}
-							{{- if $hasEnded }}
-								{{- $timeline = printf "%s\n%s: %s" $timeline ($root.L.T "globals.fields.endedAt") (ExactDate .UpdatedAt) }}
-							{{- end }}
-							{{- with Duration .StartedAt .UpdatedAt }}{{ $timeline = printf "%s\n%s: %s" $timeline ($root.L.T "globals.fields.duration") . }}{{ end }}
-							<span tabindex="0" title="{{ $timeline }}" @click="$el.focus()" data-tooltip-placement="bottom">
-								{{- if $hasEnded }}
-									{{ FormatTimestamps .StartedAt .UpdatedAt }}
-								{{- else if and (not (or (eq .Status "draft") (eq .Status "scheduled"))) .StartedAt.Valid }}
-									{{ CompactDate .StartedAt true }} <span class="text-8 text-light">{{ $root.L.T "globals.fields.startedAt" | lower }}</span>
-								{{- else }}
-									{{ NiceDate .CreatedAt }}
-								{{- end }}
-							</span>
+							—
 						{{- end }}
 					</td>
 					<td class="actions align-right">
