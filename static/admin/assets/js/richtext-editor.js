@@ -10,6 +10,18 @@ import {
 const TRACK_SUFFIX = '@TrackLink';
 const TRACK_KEY = 'trackLink';
 
+// Oat's document-level tooltips move title attributes to data-tooltip and
+// insert tooltip markup. Keep them out of authored content, including when
+// an event outside the editor points into it through relatedTarget.
+for (const type of ['mouseover', 'mouseout', 'focusin', 'focusout']) {
+  document.addEventListener(type, (e) => {
+    const node = type.endsWith('out') ? e.relatedTarget : e.target;
+    if (node?.closest?.('richtext-editor [data-rte-content]')) {
+      e.stopPropagation();
+    }
+  }, true);
+}
+
 // Simple toolbar toggles.
 const TOGGLES = {
   bold: ['B', 'bold', 'removeBold'],
@@ -392,7 +404,10 @@ class RichtextEditor extends HTMLElement {
     f.title.value = a?.getAttribute('title') ?? '';
     f.track.checked = a ? tracked : localStorage.getItem(TRACK_KEY) === 'true';
 
-    d.querySelector('[data-rte-act="submit"]').onclick = () => {
+    f.onsubmit = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
       let url = f.url.value.trim();
       if (!url) {
         d.close();
